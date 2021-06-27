@@ -1,0 +1,30 @@
+[
+        {
+            "lat":43.64852093920521,
+            "lon":-79.38019037246704,
+            "name": "IBI Test Start Point 1 Type 1",
+            "description":"IBI Start Point Description 1",
+            "color":"#ff0"
+        },
+        {
+            "lat":43.64852093920521,
+            "lon":-79.38019037246704,
+            "name": "IBI Test Start Point 1 Type 2",
+            "description":"IBI Start Point Description 2",
+            "color":"#fb0"
+        },
+        {
+            "lat":43.65524742099167,
+            "lon":-79.38719362020493,
+            "name": "IBI Test Middle Point",
+            "description":"IBI Mideel Point Description",
+            "color":"#f00"
+        },
+        {
+            "lat":43.6559906645898,
+            "lon":-79.3862065672875,
+            "name": "IBI Test End Point, no description",
+            "color":"#a10"
+        }
+]
+
