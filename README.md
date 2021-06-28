@@ -3,7 +3,7 @@ IBI skill test
 
 ## Description
 
-This application was created with SwiftUI that contains follwoing features:
+This application was created with SwiftUI and MKMapView that contains follwoing features:
    * 1st page has one button to jump to next page
    * 2nd page shows mapview, and can click button to show annotations with data provided by test_annotations.json
    * 2nd page have a button to draw a polyline connecting the geo-location points with data provided by test_polyline.json
