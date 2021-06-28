@@ -18,6 +18,11 @@ This application was created with SwiftUI and MKMapView that contains follwoing 
 * iOS 14.0
 
 ### Installing
+Need to add following  libraries:
+* swiftui-navigation-stack from https://github.com/matteopuc/swiftui-navigation-stack
+
+Need to add following frameworks:
+* Mapkit.framework
 
 Need to add following description to the info.plist
 * Privacy - Location Always and When In Use Usage Description
@@ -26,7 +31,10 @@ Need to add following description to the info.plist
 ### Executing program
 
 * Build and run the application on the simulator
-* Set the simulator locations to "lat":43.64852093920521, "lon":-79.38019037246704,
+* On the 1st page, click the map icon to go to next page
+* On the 2nd page, click the mappin button to show annotations, click the plus button to show polyline
+* Click the annotations to show details, and click the i icon to display 3rd page
+* On the 3rd page, click the back arrow button to go back to 1st page
 
 
 ## Authors

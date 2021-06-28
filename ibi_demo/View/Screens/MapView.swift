@@ -71,7 +71,7 @@ struct MapView: View {
                 
                     Spacer()
                     Button(action: {
-                        drawLine()
+                        loadCoordinates()
                         
                     }, label: {
                         Image(systemName: "plus")
@@ -86,57 +86,86 @@ struct MapView: View {
                     .padding(.trailing)
                 
 
-            }
+                }
 
-        }
-        .onAppear{
-            loadLocations()
-        }
-        .alert(isPresented: $showingPlaceDetails, content: {
-            Alert(title: Text("Show Details"),primaryButton: .default(Text("OK"),action:{
+            }
+            .onAppear{
+                loadLocations()
+            }
+            .alert(isPresented: $showingPlaceDetails, content: {
+                Alert(title: Text("Show Details"),primaryButton: .default(Text("OK"),action:{
+                        
+                    //self.deleteCurrentView()
                     showingPage3 = true
-                
-                  
-                
-                //self.deleteCurrentView()
-            }), secondaryButton: .default(Text("Cancel")))
+                }), secondaryButton: .default(Text("Cancel")))
+            })
+            .navigationBarTitle("")
+            .sheet(isPresented: $showingPage3, content: { AnnotationView(anno: selectedPlace ?? MKPointAnnotation.example)})
             
-        })
-        .navigationBarTitle("")
-        .sheet(isPresented: $showingPage3, content: { AnnotationView(anno: selectedPlace ?? MKPointAnnotation.example)})
-    }
+        }
     }
     
     // MARK: Helper Function
     
     func loadLocations(){
-        guard let path = Bundle.main.path(forResource: "annotations", ofType: "json") else {fatalError("File not found")}
-        guard let data = try? Data(contentsOf: URL(fileURLWithPath: path)) else {return}
-
-        let decoder = JSONDecoder()
-
-        let annotations = try? decoder.decode([Annotation].self, from: data)
-        if let annotations = annotations{
-            self.annotations = annotations
+        let urlString = "https://ibimobile-interview.s3.amazonaws.com/test_annotations.json"
+        let url = URL(string: urlString)
+        guard url != nil else{
+            return
         }
-        print(annotations)
+        
+        let session = URLSession.shared
+        let dataTask = session.dataTask(with: url!) { data, response, error in
+            if error == nil && data != nil {
+                let result = try? JSONDecoder().decode(Markers.self, from: data!)
+                if let result = result{
+                    print(result)
+                    self.annotations = result.markers
+   
+                }
+            }
+        }
+        dataTask.resume()
+            
+//        guard let path = Bundle.main.path(forResource: "annotations", ofType: "json") else {fatalError("File not found")}
+//        guard let data = try? Data(contentsOf: URL(fileURLWithPath: path)) else {return}
+//
+//        let decoder = JSONDecoder()
+//
+//        let annotations = try? decoder.decode([Annotation].self, from: data)
+//        if let annotations = annotations{
+//            self.annotations = annotations
+//        }
+//        print(annotations)
 
     }
     
-    func drawLine(){
-        print("processing json")
-        guard let path = Bundle.main.path(forResource: "paths", ofType: "json") else {fatalError("File not found")}
-        guard let data = try? Data(contentsOf: URL(fileURLWithPath: path)) else {return}
-        let jsonResult = try! JSONSerialization.jsonObject(with: data) as? [String: Any]
-        if let coords = jsonResult?["polyline"] as? [NSArray]{
-            for coordinate in coords {
-                let lat = coordinate[0]
-                let lon = coordinate[1]
-                polylineCoords.append(CLLocationCoordinate2D(latitude: lat as! CLLocationDegrees, longitude: lon as! CLLocationDegrees))
-                
+    func loadCoordinates(){
+        let urlString = "https://ibimobile-interview.s3.amazonaws.com/test_polyline.json"
+        let url = URL(string: urlString)
+        guard url != nil else{
+            return
+        }
+        
+        let session = URLSession.shared
+        let dataTask = session.dataTask(with: url!) { data, response, error in
+            if error == nil && data != nil {
+                let jsonResult = try! JSONSerialization.jsonObject(with: data!) as? [String: Any]
+                if let coords = jsonResult?["polyline"] as? [NSArray]{
+                    for coordinate in coords {
+                        let lat = coordinate[0]
+                        let lon = coordinate[1]
+                        polylineCoords.append(CLLocationCoordinate2D(latitude: lat as! CLLocationDegrees, longitude: lon as! CLLocationDegrees))
+                        
+                    }
+                }
             }
         }
-
+        dataTask.resume()
+        
+        
+        //guard let path = Bundle.main.path(forResource: "paths", ofType: "json") else {fatalError("File not found")}
+        //guard let data = try? Data(contentsOf: URL(fileURLWithPath: path)) else {return}
     }
     
     func deleteCurrentView(){
@@ -153,15 +182,6 @@ struct mapView_Previews: PreviewProvider {
     }
 }
 
-struct FullScreenModalView: View {
-    @Environment(\.presentationMode) var presentationMode
-
-    var body: some View {
-        Button("Dismiss Modal") {
-            presentationMode.wrappedValue.dismiss()
-        }
-    }
-}
 
 
 

@@ -7,6 +7,7 @@
 
 import SwiftUI
 import MapKit
+import NavigationStack
 
 struct AnnotationView: View {
     @State var anno: MKPointAnnotation
@@ -14,7 +15,7 @@ struct AnnotationView: View {
     @State private var showingAlert = false
     @State private var activateLink = false
     @Environment(\.presentationMode) var presentationMode
-    
+    @EnvironmentObject var navStack: NavigationStack
     var body: some View {
         VStack{
             Text((anno.title ?? "No Title")!)
@@ -38,21 +39,27 @@ struct AnnotationView: View {
                 })
                 .alert(isPresented: $showingAlert, content: {
                     Alert(title: Text("Go Back?"), primaryButton: .default(Text("Yes"), action: {
-                        self.presentationMode.wrappedValue.dismiss()
-
+                        self.navStack.pop()
+                        //self.presentationMode.wrappedValue.dismiss()
+                        
                     }), secondaryButton: .cancel())
+                    
                 })
                 
             }
-
-            
+        
 
     }
+    
+    func deleteCurrentView(){
+        presentationMode.wrappedValue.dismiss()
+    }
+        
 }
 
-//struct AnnotationView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        let annotation = MKPointAnnotation.example
-//        AnnotationView(annotation: annotation)
-//    }
-//}
+struct AnnotationView_Previews: PreviewProvider {
+    static var previews: some View {
+        let annotation = MKPointAnnotation.example
+        AnnotationView(anno: annotation)
+    }
+}

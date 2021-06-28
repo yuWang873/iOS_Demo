@@ -13,6 +13,7 @@ struct MapAnnotationView: UIViewRepresentable{
     
 
     // MARK: Properties
+    
     //var polylineCoords: [CLLocationCoordinate2D] = []
     @ObservedObject private var locationManager = LocationHandler()
     //@State private var cancellable: AnyCancellable?
@@ -24,15 +25,6 @@ struct MapAnnotationView: UIViewRepresentable{
     @Binding var showingPlaceDetails: Bool
     var annotation: [MKPointAnnotation]
     var lineCoordinates: [CLLocationCoordinate2D]
-    
-    
-    
-//    func setCurrentLocation(){
-//        cancellable = locationManager.$location.sink { location in
-//            region = MKCoordinateRegion(center: location?.coordinate ?? CLLocationCoordinate2D(), latitudinalMeters: 500, longitudinalMeters: 500)
-//            
-//        }
-//    }
     
     func updateUIView(_ uiView: MKMapView, context: Context) {
         //mapView.delegate = context.coordinator
@@ -64,7 +56,6 @@ struct MapAnnotationView: UIViewRepresentable{
         Coordinator(self)
     }
     
-
     
 }
 
@@ -100,7 +91,7 @@ class Coordinator: NSObject, MKMapViewDelegate{
             annotationView?.canShowCallout = true
             
             let button = UIButton(type: .detailDisclosure)
-            button.addTarget(self, action: #selector(self.addView), for: .touchUpInside)
+            //button.addTarget(self, action: #selector(self.addView), for: .touchUpInside)
             annotationView?.rightCalloutAccessoryView = button
         } else {
             annotationView?.annotation = annotation
@@ -114,21 +105,10 @@ class Coordinator: NSObject, MKMapViewDelegate{
     }
     
     func mapView(_ mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
-        
-        
         guard let placemark = view.annotation as? MKPointAnnotation else {return}
         parent.selectedPlace = placemark
         parent.showingPlaceDetails = true
         
-//        Group{
-//        NavigationLink(
-//            destination: AnnotationView(title: placemark.title, subTitle: placemark.subtitle),
-//            isActive: $tapped,
-//            label: {
-//                EmptyView()
-//            })
-//            
-//        }
     }
 }
 
@@ -142,12 +122,13 @@ extension MKPointAnnotation{
     }
 }
 
-//struct MapAnnotationView_Previews: PreviewProvider{
-//
-//    static var previews: some View{
-//        
-//        let region = MKCoordinateRegion(center:CLLocationCoordinate2D(latitude: 43.64852093920521, longitude: -79.38019037246704), span: MKCoordinateSpan(latitudeDelta: 0.3, longitudeDelta: 0.3))
-//        
-//        MapAnnotationView(region: region, centerCoordinate: .constant(MKPointAnnotation.example.coordinate), selectedPlace: .constant(MKPointAnnotation.example), showingPlaceDetails: .constant(false), annotation: [MKPointAnnotation.example])
-//    }
-//}
+struct MapAnnotationView_Previews: PreviewProvider{
+
+    static var previews: some View{
+        
+        let region = MKCoordinateRegion(center:CLLocationCoordinate2D(latitude: 43.64852093920521, longitude: -79.38019037246704), span: MKCoordinateSpan(latitudeDelta: 0.3, longitudeDelta: 0.3))
+        let lineCoord = [CLLocationCoordinate2D(latitude: 43.64852, longitude: 79.38019),
+                         CLLocationCoordinate2D(latitude: 43.64857, longitude: -79.3802)]
+        MapAnnotationView(region: region, centerCoordinate: .constant(MKPointAnnotation.example.coordinate), selectedPlace: .constant(MKPointAnnotation.example), showingPlaceDetails: .constant(false), annotation: [MKPointAnnotation.example], lineCoordinates: lineCoord)
+    }
+}

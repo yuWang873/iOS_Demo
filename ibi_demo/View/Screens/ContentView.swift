@@ -8,29 +8,39 @@
 import SwiftUI
 import MapKit
 import Combine
-
+import NavigationStack
 
 struct ContentView: View {
+    @State var showingMapView = false
     
     var body: some View {
-        NavigationView{
+        NavigationStackView{
             VStack{
                 Text("Page 1")
+                    .padding(.top, 10)
                     .font(.system(size: 32))
-                    .padding(.all, 10)
                     .frame(maxWidth: .infinity, alignment: .center)
+                    .offset(y:-60)
                 
-                NavigationLink(
-                    destination: MapView(),
+                PushView(
+                    destination: MapView(), isActive:$showingMapView,
                     label: {
-                        Image(systemName: "map.fill")
-                            .resizable()
-                            .aspectRatio(contentMode: .fit)
-                            .accentColor(.blue)
-                            .frame(width: 50, height: 50, alignment: .center)
+                        Button(action: {
+                            
+                            showingMapView = true
+                        }, label: {
+                            Image(systemName: "map.fill")
+                                .resizable()
+                                .aspectRatio(contentMode: .fit)
+                                .accentColor(.blue)
+                                .frame(width: 50, height: 50, alignment: .center)
+                        })
+                        
+                        
                         
                     })
                 Text("Go to Map")
+                
                 }
 
         }

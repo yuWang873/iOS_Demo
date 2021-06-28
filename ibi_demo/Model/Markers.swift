@@ -6,10 +6,9 @@
 //
 
 import Foundation
-import MapKit
 
 struct Markers: Decodable{
-    var markers: [Annotation]?
+    let markers: [Annotation]
     
     enum CodingKeys: String, CodingKey {
         case markers = "markers"

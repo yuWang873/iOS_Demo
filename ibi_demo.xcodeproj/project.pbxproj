@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 52;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -14,6 +14,7 @@
 		E21E882C2686A34600F17C88 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = E21E882B2686A34600F17C88 /* Extensions.swift */; };
 		E258B3D02686DFAB0013EF34 /* Polyline.swift in Sources */ = {isa = PBXBuildFile; fileRef = E258B3CF2686DFAB0013EF34 /* Polyline.swift */; };
 		E258B3D22687E3C30013EF34 /* MapAnnotationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E258B3D12687E3C30013EF34 /* MapAnnotationView.swift */; };
+		E258B3D526898FBA0013EF34 /* NavigationStack in Frameworks */ = {isa = PBXBuildFile; productRef = E258B3D426898FBA0013EF34 /* NavigationStack */; };
 		E27155BB26857F2E006B261E /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E27155BA26857F2E006B261E /* MapKit.framework */; };
 		E27155BD268584D2006B261E /* annotations.json in Resources */ = {isa = PBXBuildFile; fileRef = E27155BC268584D2006B261E /* annotations.json */; };
 		E2A37C3626841EFC00ABA638 /* ibi_demoApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2A37C3526841EFC00ABA638 /* ibi_demoApp.swift */; };
@@ -50,6 +51,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				E27155BB26857F2E006B261E /* MapKit.framework in Frameworks */,
+				E258B3D526898FBA0013EF34 /* NavigationStack in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -167,6 +169,9 @@
 			dependencies = (
 			);
 			name = ibi_demo;
+			packageProductDependencies = (
+				E258B3D426898FBA0013EF34 /* NavigationStack */,
+			);
 			productName = ibi_demo;
 			productReference = E2A37C3226841EFC00ABA638 /* ibi_demo.app */;
 			productType = "com.apple.product-type.application";
@@ -194,6 +199,9 @@
 				Base,
 			);
 			mainGroup = E2A37C2926841EFC00ABA638;
+			packageReferences = (
+				E258B3D326898FBA0013EF34 /* XCRemoteSwiftPackageReference "swiftui-navigation-stack" */,
+			);
 			productRefGroup = E2A37C3326841EFC00ABA638 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -420,6 +428,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		E258B3D326898FBA0013EF34 /* XCRemoteSwiftPackageReference "swiftui-navigation-stack" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/matteopuc/swiftui-navigation-stack.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.0.3;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		E258B3D426898FBA0013EF34 /* NavigationStack */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = E258B3D326898FBA0013EF34 /* XCRemoteSwiftPackageReference "swiftui-navigation-stack" */;
+			productName = NavigationStack;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = E2A37C2A26841EFC00ABA638 /* Project object */;
 }
