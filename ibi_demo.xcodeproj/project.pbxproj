@@ -13,7 +13,7 @@
 		E21E8829268681CD00F17C88 /* AnnotationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E21E8828268681CD00F17C88 /* AnnotationView.swift */; };
 		E21E882C2686A34600F17C88 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = E21E882B2686A34600F17C88 /* Extensions.swift */; };
 		E258B3D02686DFAB0013EF34 /* Polyline.swift in Sources */ = {isa = PBXBuildFile; fileRef = E258B3CF2686DFAB0013EF34 /* Polyline.swift */; };
-		E258B3D22687E3C30013EF34 /* PolylineView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E258B3D12687E3C30013EF34 /* PolylineView.swift */; };
+		E258B3D22687E3C30013EF34 /* MapAnnotationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E258B3D12687E3C30013EF34 /* MapAnnotationView.swift */; };
 		E27155BB26857F2E006B261E /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E27155BA26857F2E006B261E /* MapKit.framework */; };
 		E27155BD268584D2006B261E /* annotations.json in Resources */ = {isa = PBXBuildFile; fileRef = E27155BC268584D2006B261E /* annotations.json */; };
 		E2A37C3626841EFC00ABA638 /* ibi_demoApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2A37C3526841EFC00ABA638 /* ibi_demoApp.swift */; };
@@ -31,7 +31,7 @@
 		E21E8828268681CD00F17C88 /* AnnotationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnnotationView.swift; sourceTree = "<group>"; };
 		E21E882B2686A34600F17C88 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		E258B3CF2686DFAB0013EF34 /* Polyline.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Polyline.swift; sourceTree = "<group>"; };
-		E258B3D12687E3C30013EF34 /* PolylineView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PolylineView.swift; sourceTree = "<group>"; };
+		E258B3D12687E3C30013EF34 /* MapAnnotationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapAnnotationView.swift; sourceTree = "<group>"; };
 		E27155BA26857F2E006B261E /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		E27155BC268584D2006B261E /* annotations.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = annotations.json; sourceTree = "<group>"; };
 		E2A37C3226841EFC00ABA638 /* ibi_demo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ibi_demo.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -146,7 +146,7 @@
 				E2A37C3726841EFC00ABA638 /* ContentView.swift */,
 				E2A37C4E2685062D00ABA638 /* MapView.swift */,
 				E21E8828268681CD00F17C88 /* AnnotationView.swift */,
-				E258B3D12687E3C30013EF34 /* PolylineView.swift */,
+				E258B3D12687E3C30013EF34 /* MapAnnotationView.swift */,
 			);
 			path = Screens;
 			sourceTree = "<group>";
@@ -230,7 +230,7 @@
 				E21E8829268681CD00F17C88 /* AnnotationView.swift in Sources */,
 				E2A37C3626841EFC00ABA638 /* ibi_demoApp.swift in Sources */,
 				E2A37C4F2685062D00ABA638 /* MapView.swift in Sources */,
-				E258B3D22687E3C30013EF34 /* PolylineView.swift in Sources */,
+				E258B3D22687E3C30013EF34 /* MapAnnotationView.swift in Sources */,
 				E2A37C5126850B8F00ABA638 /* LocationHandler.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

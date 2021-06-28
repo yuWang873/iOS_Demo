@@ -6,8 +6,10 @@ IBI skill test
 This application was created with SwiftUI that contains follwoing features:
    * 1st page has one button to jump to next page
    * 2nd page shows mapview, and can click button to show annotations with data provided by test_annotations.json
-   * When clicked the annotations, 3rd page pops up and display the name of the annontation and its descriptions
    * 2nd page have a button to draw a polyline connecting the geo-location points with data provided by test_polyline.json
+   * When clicked the annotations, 3rd page pops up and display the name of the annontation and its descriptions
+   * On the 3rd page, there is a back button that ask yes/no, if yes was clicked, dimiss the 3rd page and can go back to 1st page by clicking the back button at top left corner
+
 
 ## Getting Started
 

@@ -12,73 +12,99 @@ import Combine
 struct MapView: View {
 
     // MARK: Properties
-    @ObservedObject private var locationManager = LocationHandler()
-    @State private var region = MKCoordinateRegion(center:CLLocationCoordinate2D(latitude: 43.64852093920521, longitude: -79.38019037246704), span: MKCoordinateSpan(latitudeDelta: 0.3, longitudeDelta: 0.3))
-    @State private var cancellable: AnyCancellable?
+
+    @State private var region = MKCoordinateRegion(center:CLLocationCoordinate2D(latitude: 43.64852093920521, longitude: -79.38019037246704), span: MKCoordinateSpan(latitudeDelta: 0.05, longitudeDelta: 0.05))
+    
+
     @State var annotations = [Annotation]()
+    
     @State var presentAnnoView: Bool = false
-    @State private var route: MKRoute?
+
     @State var polylineCoords: [CLLocationCoordinate2D] = []
-    private let mapView = MKMapView()
     @State private var isPresented = false
+    
+    @State private var centerCoordinate = CLLocationCoordinate2D()
+    @State var locations = [MKPointAnnotation]()
+    @State private var selectedPlace: MKPointAnnotation?
+    @State private var showingPlaceDetails = false
+    
+    @Environment(\.managedObjectContext) var moc
+    @Environment(\.presentationMode) var presentationMode
+    @State private var showingDeleteAlert = false
+    
+    @State var showingPage3 = false
 
     var body: some View{
-        VStack{
-            if locationManager.location != nil {
-                
-                Map(coordinateRegion: $region, interactionModes: .all, showsUserLocation: true, userTrackingMode: nil, annotationItems: annotations) { annotation in
-                    MapAnnotation(coordinate: CLLocationCoordinate2D(latitude: annotation.lat, longitude: annotation.lon)) {
-                        Button(action: {
-                            presentAnnoView = true
-                        }, label: {
-                            Image(systemName: "mappin")
-                                .resizable()
-                                .aspectRatio(contentMode: .fit)
-                                .frame(width: 40, height: 40, alignment: .center)
-                                .accentColor(Color(hex: annotation.color))
-                                .foregroundColor(Color(hex: annotation.color))
-                                .sheet(isPresented: $presentAnnoView, content: {
-                                    AnnotationView(annotation: annotation)
-                                })
-                        })
-                    }
-                    
-                }
-                
-            } else {
-                Text("No user location avaliable")
-            }
+        
+        ZStack{
+            MapAnnotationView(region: region, centerCoordinate: $centerCoordinate,selectedPlace: $selectedPlace, showingPlaceDetails: $showingPlaceDetails, annotation: locations, lineCoordinates: polylineCoords)
+                .edgesIgnoringSafeArea(.all)
+            Circle()
+                .fill(Color.blue)
+                .opacity(0.3)
+                .frame(width: 16, height: 16)
             
-            HStack{
-                Button(action: {
-                    loadLocations()
-                    
-                }, label: {
-                    Text("Show Annotation")
-                })
-                .padding(.all, 6)
-                .cornerRadius(10)
-                .frame(width: 180, height: 40, alignment: .center)
-                    
-                NavigationLink(
-                    
-                    destination: PolylineView(region: region, lineCoordinates: polylineCoords)
-                        .navigationBarTitle("Polyline View"),
-                    label: {
-                        Text("Draw Polyline")
-                            .padding(.all, 6)
-                            .cornerRadius(10)
-                            .frame(width: 180, height: 40, alignment: .center)
+            VStack{
+                Spacer()
+                HStack{
+
+                    Button(action: {
+                        for anno in annotations{
+                            var newLocation = MKPointAnnotation()
+                            newLocation.title = anno.name
+                            newLocation.subtitle = anno.description
+                            newLocation.coordinate = CLLocationCoordinate2D(latitude: anno.lat, longitude: anno.lon)
+                            self.locations.append(newLocation)
+                        }
+                    }, label: {
+                        Image(systemName: "mappin")
                     })
+                    .padding()
+                    .aspectRatio(contentMode: .fit)
+                    .frame(width: 50, height: 50, alignment: .center
+                    )
+                    .background(Color.black.opacity(0.75))
+                    .foregroundColor(.white)
+                    .font(.title)
+                    .padding(.leading)
+                    Spacer()
+                
+                    Spacer()
+                    Button(action: {
+                        drawLine()
+                        
+                    }, label: {
+                        Image(systemName: "plus")
+                    })
+                    .padding()
+                    .aspectRatio(contentMode: .fit)
+                    .frame(width: 50, height: 50, alignment: .center
+                    )
+                    .background(Color.black.opacity(0.75))
+                    .foregroundColor(.white)
+                    .font(.title)
+                    .padding(.trailing)
+                
+
             }
 
         }
         .onAppear{
-            setCurrentLocation()
-            drawLine()
+            loadLocations()
         }
-
-        .navigationBarTitle("Map View")
+        .alert(isPresented: $showingPlaceDetails, content: {
+            Alert(title: Text("Show Details"),primaryButton: .default(Text("OK"),action:{
+                    showingPage3 = true
+                
+                  
+                
+                //self.deleteCurrentView()
+            }), secondaryButton: .default(Text("Cancel")))
+            
+        })
+        .navigationBarTitle("")
+        .sheet(isPresented: $showingPage3, content: { AnnotationView(anno: selectedPlace ?? MKPointAnnotation.example)})
+    }
     }
     
     // MARK: Helper Function
@@ -112,13 +138,12 @@ struct MapView: View {
         }
 
     }
-        
-    private func setCurrentLocation(){
-        cancellable = locationManager.$location.sink { location in
-            region = MKCoordinateRegion(center: location?.coordinate ?? CLLocationCoordinate2D(), latitudinalMeters: 500, longitudinalMeters: 500)
-            
-        }
+    
+    func deleteCurrentView(){
+        presentationMode.wrappedValue.dismiss()
     }
+        
+
 
 }
 
@@ -137,5 +162,6 @@ struct FullScreenModalView: View {
         }
     }
 }
+
 
 

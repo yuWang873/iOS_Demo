@@ -6,22 +6,23 @@
 //
 
 import SwiftUI
+import MapKit
 
 struct AnnotationView: View {
-    
-    @State var annotation: Annotation
+    @State var anno: MKPointAnnotation
+
     @State private var showingAlert = false
     @State private var activateLink = false
     @Environment(\.presentationMode) var presentationMode
     
     var body: some View {
-            VStack{
-                Text(annotation.name)
+        VStack{
+            Text((anno.title ?? "No Title")!)
                     .bold()
                     .foregroundColor(.black)
                     .font(.system(size: 24))
                     .padding(.all, 10)
-                Text(annotation.description ?? "No Description")
+            Text((anno.subtitle ?? "No Description")!)
                     .foregroundColor(.gray)
                     .font(.system(size: 20))
                     .padding(.all, 10)
@@ -37,7 +38,6 @@ struct AnnotationView: View {
                 })
                 .alert(isPresented: $showingAlert, content: {
                     Alert(title: Text("Go Back?"), primaryButton: .default(Text("Yes"), action: {
-                        
                         self.presentationMode.wrappedValue.dismiss()
 
                     }), secondaryButton: .cancel())
@@ -50,9 +50,9 @@ struct AnnotationView: View {
     }
 }
 
-struct AnnotationView_Previews: PreviewProvider {
-    static var previews: some View {
-        let annotation = Annotation(lat: 43.64852093920521, lon: -79.38019037246704, name: "IBI Test Start Point 1 Type 1", description: "IBI Start Point Description 1", color: "#ff0")
-        AnnotationView(annotation: annotation)
-    }
-}
+//struct AnnotationView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        let annotation = MKPointAnnotation.example
+//        AnnotationView(annotation: annotation)
+//    }
+//}
